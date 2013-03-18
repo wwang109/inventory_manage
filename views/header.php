@@ -24,6 +24,7 @@
 	<body>
 	  
       <div class="container">
+      	<div class="row-fluid">
 			<?php if (isset($this->_alert)): ?>
 				<div class="alert alert-<?php _e($this->_alert); ?>">
 					<button data-dismiss="alert" class="close" type="button">x</button>
@@ -38,17 +39,17 @@
              <div class="navbar-inner">
                <div class="container">
                  <ul class="nav">
-                   <li class="active"><a href="#">Home</a></li>
+                   <li><a href="<?php _e(URL) ?>index">Home</a></li>
+                   <li><a href="<?php _e(URL) ?>product">Product List</a></li>
                    <li class="dropdown">
-                		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Products <b class="caret"></b></a>
+                		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Inventory<b class="caret"></b></a>
                 		<ul class="dropdown-menu">
-                  			<li><a href="#">Add</a></li>
-                  			<li><a href="#">Edit</a></li>	
+                  			<li><a href="#">View</a></li>	
                   			<li class="divider"></li>
-                  			<li><a href="#">View</a></li>
+                  			<li><a href="#">Update</a></li>
                   			
                 		</ul>
-              		</li>
+              		</li>					
                    <li class="dropdown">
                 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Invoice <b class="caret"></b></a>
                 		<ul class="dropdown-menu">

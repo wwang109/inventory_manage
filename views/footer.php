@@ -1,8 +1,10 @@
 
-<?php if(session::get('logged') == TRUE): ?>
-<div class="footer">
-	(C) Footer
 </div>
+<hr>
+<?php if(session::get('logged') == TRUE): ?>
+<footer style="text-align: center;">
+	Footer here
+</footer>
 <?php endif ?>
 
 </div>

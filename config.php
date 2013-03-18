@@ -20,7 +20,11 @@ define('SALT', 'zEqAveSAphEspajen73A');
 define('ALGO', 'SHA256');
 
 define('IS_R', true);
-define('TIMEOUT', 60); // minute
+define('TIMEOUT', 6000); // minute
 define('TIMEZONE', 'America/Toronto');
+define('FILE_MAX_SIZE', 1024000);
+
+define('UPLOAD_PATH', URL + 'public/image/');
+
 
 define('BEAN_OBJ', 'rObj');
