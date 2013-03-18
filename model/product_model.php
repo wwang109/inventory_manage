@@ -69,7 +69,7 @@ class product_Model extends Model {
 		}
 		
 		R::store($product);
-		return array('success'=>'Product has been updated');
+		return array('success'=>'Product has been updated', 'obj' =>$product);
 		
 	}
 	
@@ -83,19 +83,18 @@ class product_Model extends Model {
 		$product->qtyUnit = trim($this->form->post('qtyUnit'));
 		$product->comment = trim($this->form->post('comment'));
 		
-		if($this->form->post('qqfile') != null) {
+		//if($this->form->post('qqfile') != null) {
 			$this->loadLibrary('QqFileUploader', array(
-			 array('jpeg', 'jpg', 'gif', 'png', 'PNG'),
-			 FILE_MAX_SIZE));		
-		
+				 array('jpeg', 'jpg', 'gif', 'png'),
+				 FILE_MAX_SIZE));
+
 			$result = $this->lib['qqfileuploader']->handleUpload(UPLOAD_PATH);
 			if (_betterKeyExists('success', $result)) {
-			$product->image = $this->lib['qqfileuploader']->getUploadName();
-			}
-			else {
-				return array('error'=>$result['error']);
-			}					
-		}	
+				$product->image = $this->lib['qqfileuploader']->getUploadName();
+			}	
+			else
+				return array('error', $result['error']);			
+		//}	
 		
 		R::store($product);
 		return array('success'=> 'Product has been added');		

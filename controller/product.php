@@ -29,7 +29,7 @@ class Product extends _Main_controller {
 		
 		function add(){
 			$res = $this->model['product']->add();
-			if(betterKeyExists('error', $res))
+			if(_betterKeyExists('error', $res))
 				$this->render('product/manage', 'error', $res['error']);
 			else
 				$this->manage($res['obj'], 'success', $res['success']);

@@ -44,7 +44,7 @@
 		  	<div class="control-group">
 		  		<label class="control-label">Image</label>
 		  		<div class="controls">
-		  			<input type="file"  name="qqfile" id="qqfile"/>
+		  			<input type="file" name="qqfile" id="qqfile">
 		  		</div>
 		  	</div>		  			  			  	
 			<div class="form-actions">

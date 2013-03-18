@@ -1,7 +1,7 @@
 <?php
 
 // Always provide a TRAILING SLASH (/) AFTER A PATH
-define('URL', 'http://localhost/_Henry/');
+define('URL', 'http://localhost/inventory_manage/');
 define('LIBS', 'libs/');
 define('SYS', '_sys/');
 define('CONTROLLERS', 'controller/');
@@ -24,7 +24,7 @@ define('TIMEOUT', 6000); // minute
 define('TIMEZONE', 'America/Toronto');
 define('FILE_MAX_SIZE', 1024000);
 
-define('UPLOAD_PATH', URL + 'public/image/');
+define('UPLOAD_PATH', 'C:\\Users\\wen\\Desktop\\html\\inventory_manage\\public\\image\\');
 
 
 define('BEAN_OBJ', 'rObj');

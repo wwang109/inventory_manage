@@ -52,7 +52,7 @@ class qqUploadedFileXhr {
 	 * @return string filename
 	 */
 	public function getName() {
-		return $_GET['qqfile'];
+		return $_POST['qqfile'];
 	}
 
 	/**
