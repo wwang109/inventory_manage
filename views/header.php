@@ -25,12 +25,6 @@
 	  
       <div class="container">
       	<div class="row-fluid">
-			<?php if (isset($this->_alert)): ?>
-				<div class="alert alert-<?php _e($this->_alert); ?>">
-					<button data-dismiss="alert" class="close" type="button">x</button>
-					<?php _e($this->_alertMsg); ?>
-				</div>
-			<?php endif; ?>
 			      	
       	<?php if(session::get('logged') == TRUE): ?>
          <div class="masthead">
@@ -65,6 +59,12 @@
              </div>
            </div><!-- /.navbar -->
          </div>
-      <?php endif ?>
          
+      <?php endif ?>
+			<?php if (isset($this->_alert)): ?>
+				<div class="alert alert-<?php _e($this->_alert); ?>">
+					<button data-dismiss="alert" class="close" type="button">x</button>
+					<?php _e($this->_alertMsg); ?>
+				</div>
+			<?php endif; ?>         
           

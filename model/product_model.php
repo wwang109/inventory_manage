@@ -22,87 +22,67 @@ class product_Model extends Model {
 		}
 		
 		else {
-					
 			try{
-				if($this->findproduct($prodNum)) {
-					return $this->edit($prodNum);
+				$valid = $this->findproduct($prodNum);
+				
+				if($valid[1]) {
+					$product = R::load(self::PRODUCT_BEAN, $valid[0]->id);
 				}
 				else {
-					return $this->insert($prodNum);
+					$product = R::dispense(self::PRODUCT_BEAN);
+					$product->productNumber = trim($this->form->post('productNumber'));
 				}
-			}
-			
-			catch(Exception $e) {
-				return array('error'=> 'Could not store');
-			}
+				$product->Name = trim($this->form->post('productName'));
+				$product->Brand = trim($this->form->post('brand'));
+				$product->qtyUnit = trim($this->form->post('qtyUnit'));
+				$product->comment = trim($this->form->post('comment'));		
 				
-		}
-	}
-	
-	public function getList() {
+				$this->loadLibrary('QqFileUploader', array(
+			 	array('jpeg', 'jpg', 'gif', 'png', 'PNG'),
+			 	FILE_MAX_SIZE));		
 		
-		
-	}
-	
-	public function edit($prodNum) {
-		
-		$product = $this->findproduct($prodNum);
-		$product = R::load(self::PRODUCT_BEAN, $product->id);
-
-		$product->Name = trim($this->form->post('productName'));
-		$product->Brand = trim($this->form->post('brand'));
-		$product->qtyUnit = trim($this->form->post('qtyUnit'));
-		$product->comment = trim($this->form->post('comment'));		
-		
-		if($this->form->post('qqfile') != null) {
-			$this->loadLibrary('QqFileUploader', array(
-			 array('jpeg', 'jpg', 'gif', 'png', 'PNG'),
-			 FILE_MAX_SIZE));		
-		
-			$result = $this->lib['qqfileuploader']->handleUpload(UPLOAD_PATH);
-			if (_betterKeyExists('success', $result)) {
-			$product->image = $this->lib['qqfileuploader']->getUploadName();
+				$result = $this->lib['qqfileuploader']->handleUpload(UPLOAD_PATH);
+					
+				if (_betterKeyExists('success', $result)) {
+					$product->image = $this->lib['qqfileuploader']->getUploadName();
+				}					
+				R::store($product);
+				return array('success'=>'Product has been updated', 'obj' =>$product);			
+					
 			}
-			else {
-				return array('error'=>$result['error']);
-			}					
+			catch(Exception $e){
+				return array('error'=> 'Could not store');
+			}	
 		}
-		
-		R::store($product);
-		return array('success'=>'Product has been updated', 'obj' =>$product);
-		
 	}
 	
-	public function insert($prodNum) {
+	public function getList($page, $sortby, $sortas) {
+		$page = intval($page);
+			switch ($sortby) {
+			case 'productNumber':
+			case 'Name':
+			case 'Brand':
+			case 'qtyUnit':
+				break;
+			default:
+				$sortby = 'dateAdded';
+		}
+		$sortas = $sortas == 'desc' ? 'desc' : 'asc';		
+		$this->loadLibrary('pagination');
+		$calcPaging = $this->lib['pagination']->calculatePages(R::count(self::PRODUCT_BEAN), 10, $page);
 		
-		$product = R::dispense(self::PRODUCT_BEAN);
-		$product->productNumber = $prodNum;
-		$product->Name = trim($this->form->post('productName'));
-		$product->Brand = trim($this->form->post('brand'));
-		$product->dateAdded = date('Y-m-d H:i:s');
-		$product->qtyUnit = trim($this->form->post('qtyUnit'));
-		$product->comment = trim($this->form->post('comment'));
+		$List = R::findall(self::PRODUCT_BEAN, 'ORDER BY ' . $sortby . ' ' . $sortas . ' LIMIT ' . $calcPaging['limit'][0] . ', ' . 10);
 		
-		//if($this->form->post('qqfile') != null) {
-			$this->loadLibrary('QqFileUploader', array(
-				 array('jpeg', 'jpg', 'gif', 'png'),
-				 FILE_MAX_SIZE));
-
-			$result = $this->lib['qqfileuploader']->handleUpload(UPLOAD_PATH);
-			if (_betterKeyExists('success', $result)) {
-				$product->image = $this->lib['qqfileuploader']->getUploadName();
-			}	
-			else
-				return array('error', $result['error']);			
-		//}	
-		
-		R::store($product);
-		return array('success'=> 'Product has been added');		
+		return array('OBJ'=>$List, 'paging'=>$calcPaging, 'sortBy'=>$sortby, 'sortAs'=>$sortas);
 		
 	}
 	
 	public function findproduct($prodNumber) {
-		return R::findone(self::PRODUCT_BEAN, 'productNumber = ?', array($prodNumber));		
+		$res = R::findone(self::PRODUCT_BEAN, 'productNumber = ?', array($prodNumber));
+		return $res ? array($res, TRUE) : array($prodNumber, FALSE, 'info', 'Product Number does not exist');		
 	}
+	
+	
+	
 	
 }

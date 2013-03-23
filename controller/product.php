@@ -14,31 +14,34 @@ class Product extends _Main_controller {
 			return FALSE;
 		}
 	
-		function index($action = null, $msg = null) {
-			
-			$this->render('product/index', $action, $msg);
+		function index($page = 1, $sortby = 'dateAdded', $sortas = 'asc') {
+			$result = $this->model['product']->getList($page, $sortby, $sortas);
+			$this->dataRender('data', $result);	
+			$this->render('product/index');
 		}	
 		
 		function manage($product = null, $action = null, $msg = null){
 			if($product) {
 				$list = $this->model['product']->findProduct($product);
-				$this->dataRender('data', $list);
+				$this->dataRender('data', $list[0]);
+				if(!$list[1]) {
+					$action = $list[2];
+					$msg = $list[3];
+				}
 			}
-			$this->render('product/manage');
+			$this->render('product/manage', $action, $msg);
 		}
 		
 		function add(){
 			$res = $this->model['product']->add();
 			if(_betterKeyExists('error', $res))
-				$this->render('product/manage', 'error', $res['error']);
-			else
-				$this->manage($res['obj'], 'success', $res['success']);
+				$this->render('product/manage');
+			else {
+				$this->manage($res['obj']->productNumber, 'success', $res['success']);
+				
+			}
 		}
-		
-		function find() {
-			
-			
-		}
+
 		
 	
 }	
