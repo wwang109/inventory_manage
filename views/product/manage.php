@@ -8,7 +8,7 @@
 		  	<div class="control-group">
 		    	<label class="control-label">Product Number</label>
 		    	<div class="controls">
-		      		<input type="text" id="productNumber" name="productNumber" value="<?php if(isset($this->data->productNumber)) _e($this->data->productNumber); elseif(isset($this->data[0])) _e($this->data[0]);?>" />
+		      		<input type="text" id="productNumber" name="productNumber" value="<?php if(isset($this->data->productNumber)) _e($this->data->productNumber); elseif(isset($this->data[0])) _e($this->data);?>" />
 		    	</div>
 		  	</div>
 		  	

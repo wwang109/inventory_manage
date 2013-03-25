@@ -1,19 +1,30 @@
-<?php //if(isset($this->data)) _debug($this->data); ?>
+<script type="text/javascript">         
+	$(document).ready(function() { 
+		var text;
+		var option = $('#options').val();     
+		$('#add').click(function() {
+			text = $('#txtbox').val(); 
+			$('#add').attr('href', '<?php _e(URL . 'product/manage/'); ?>' + text);	
+		});                           
+		
+    });   
+</script>  
+
 <div class="row-fluid">
 	<div class="page-header">
 		<h3>Product</h3>
 	</div>
 	<form class="form-inline" >
-		<input type="text">
-		<select>
-			<option>Product Number</option>
-			<option>Name</option>
-			<option>Brand</option>
+		<input id="txtbox" type="text">
+		<select id="options">
+			<option value="productNumber">Product Number</option>
+			<option value="name">Name</option>
+			<option value="brand">Brand</option>
 		</select>
-		<button class="btn btn-primary">
+		<button id="search" class="btn btn-primary">
 			<i class="icon-search icon-white"></i> Search
 		</button>
-		<a class="btn btn-info" href="<?php _e(URL) ?>product/manage"><i class="icon-plus icon-white"></i> Add</a>
+		<a id="add" class="btn btn-info"><i class="icon-plus icon-white"></i> Add Product</a>
 	</form>
 	<?php if (count($this->data['OBJ']) > 0): ?>
 		<div class="pagination pagination-centered">

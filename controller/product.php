@@ -41,6 +41,14 @@ class Product extends _Main_controller {
 				
 			}
 		}
+		
+		function delete() {
+			
+		}
+		
+		function search() {
+			
+		}
 
 		
 	
