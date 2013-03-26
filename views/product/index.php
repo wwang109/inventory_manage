@@ -14,14 +14,14 @@
 	<div class="page-header">
 		<h3>Product</h3>
 	</div>
-	<form class="form-inline" >
-		<input id="txtbox" type="text">
-		<select id="options">
+	<form class="form-inline" action="<?php _e(URL . 'product/search'); ?>" method="post" >
+		<input id="txtbox" name="txtbox" type="text">
+		<select id="options" name="options">
 			<option value="productNumber">Product Number</option>
-			<option value="name">Name</option>
-			<option value="brand">Brand</option>
+			<option value="Name">Name</option>
+			<option value="Brand">Brand</option>
 		</select>
-		<button id="search" class="btn btn-primary">
+		<button type="submit" id="search" class="btn btn-primary">
 			<i class="icon-search icon-white"></i> Search
 		</button>
 		<a id="add" class="btn btn-info"><i class="icon-plus icon-white"></i> Add Product</a>
@@ -31,19 +31,19 @@
 			<ul>
 				<?php if ($this->data['paging']['previous'] != -1): ?>
 					<li <?php if ($this->data['paging']['current'] == $this->data['paging']['previous']) _e('class="disabled"'); ?>>
-						<a <?php if ($this->data['paging']['current'] != $this->data['paging']['previous']) _e('href="' . URL . "product/index/{$this->data['paging']['previous']}/{$this->data['sortBy']}/{$this->data['sortAs']}" . '"'); ?>>Prev</a>
+						<a <?php if ($this->data['paging']['current'] != $this->data['paging']['previous']) _e('href="' . URL . "product/index/{$this->data['search']}/{$this->data['paging']['previous']}/{$this->data['sortBy']}/{$this->data['sortAs']}" . '"'); ?>>Prev</a>
 					</li>
 				<?php endif; ?>
 
 				<?php foreach ($this->data['paging']['pages'] as $page): ?>
 					<li <?php if ($page == $this->data['paging']['current']) _e('class="active"'); ?>>
-						<a <?php if($this->data['paging']['current'] != $page) _e('href="' . URL . "product/index/{$page}/{$this->data['sortBy']}/{$this->data['sortAs']}" . '"'); ?>><?php _e($page); ?></a>
+						<a <?php if($this->data['paging']['current'] != $page) _e('href="' . URL . "product/index/{$this->data['search']}/{$page}/{$this->data['sortBy']}/{$this->data['sortAs']}" . '"'); ?>><?php _e($page); ?></a>
 					</li>
 				<?php endforeach; ?>
 
 				<?php if ($this->data['paging']['next'] > 0): ?>
 					<li <?php if ($this->data['paging']['current'] == $this->data['paging']['next']) _e('class="disabled"'); ?>>
-						<a <?php if($this->data['paging']['current'] != $this->data['paging']['next']) _e('href="' . URL . "product/index/{$this->data['paging']['next']}/{$this->data['sortBy']}/{$this->data['sortAs']}" . '"'); ?>>Next</a>
+						<a <?php if($this->data['paging']['current'] != $this->data['paging']['next']) _e('href="' . URL . "product/index/{$this->data['search']}/{$this->data['paging']['next']}/{$this->data['sortBy']}/{$this->data['sortAs']}" . '"'); ?>>Next</a>
 					</li>
 				<?php endif; ?>
 			</ul>
@@ -52,12 +52,13 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th><a href="<?php _e(URL . "product/index/{$this->data['paging']['current']}/productNumber/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Product Number</a></th>
-				<th><a href="<?php _e(URL . "product/index/{$this->data['paging']['current']}/Name/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Name</a></th>
-				<th><a href="<?php _e(URL . "product/index/{$this->data['paging']['current']}/Brand/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Brand</a></th>
-				<th><a href="<?php _e(URL . "product/index/{$this->data['paging']['current']}/qtyUnit/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">QTY PER</a></th>
-				<th><a href="<?php _e(URL . "product/index/{$this->data['paging']['current']}/dateAdded/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Date Added</a></th>
+				<th><a href="<?php _e(URL . "product/index/{$this->data['search']}/{$this->data['paging']['current']}/productNumber/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Product Number</a></th>
+				<th><a href="<?php _e(URL . "product/index/{$this->data['search']}/{$this->data['paging']['current']}/Name/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Name</a></th>
+				<th><a href="<?php _e(URL . "product/index/{$this->data['search']}/{$this->data['paging']['current']}/Brand/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Brand</a></th>
+				<th><a href="<?php _e(URL . "product/index/{$this->data['search']}/{$this->data['paging']['current']}/qtyUnit/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">QTY PER</a></th>
+				<th><a href="<?php _e(URL . "product/index/{$this->data['search']}/{$this->data['paging']['current']}/dateAdded/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc')); ?>">Date Added</a></th>
 				<th>Comments</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -70,9 +71,12 @@
 				<td style="vertical-align:middle" ><?php _e($rows->qtyUnit) ?></td>
 				<td style="vertical-align:middle" ><?php _e($rows->dateAdded) ?></td>
 				<td style="vertical-align:middle" ><?php _e($rows->comment) ?></td>
+				<td style="vertical-align:middle" ><a href="<?php _e(URL . 'product/manage/' . $rows->productNumber); ?>" class="btn btn-primary">Edit</a></td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	<?php else: ?>
+		<h3>No  results</h3>
 	<?php endif; ?>
 </div>

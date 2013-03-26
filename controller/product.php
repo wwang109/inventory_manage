@@ -14,8 +14,8 @@ class Product extends _Main_controller {
 			return FALSE;
 		}
 	
-		function index($page = 1, $sortby = 'dateAdded', $sortas = 'asc') {
-			$result = $this->model['product']->getList($page, $sortby, $sortas);
+		function index($search = array(), $page = 1, $sortby = 'dateAdded', $sortas = 'asc') {
+			$result = $this->model['product']->getList($search, $page, $sortby, $sortas);
 			$this->dataRender('data', $result);	
 			$this->render('product/index');
 		}	
@@ -47,6 +47,10 @@ class Product extends _Main_controller {
 		}
 		
 		function search() {
+			
+			$res = $this->model['product']->search();
+			
+			$this->index($res, 1, 'dateAdded', 'asc');
 			
 		}
 
