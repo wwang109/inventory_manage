@@ -1,3 +1,19 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		if($('#brandlist select').val() != 'other') {
+			$('#brandbox').hide();
+		}
+		
+		$('#brandlist select').change( {
+			if($('#brandlist select').val() != 'other') {
+				$('#brandbox').hide();
+				return true;
+			}
+			$('#brandbox').show();
+		});
+
+	});
+</script>
 <div class="row-fluid">
 	<div class="page-header">
 		<h3>Product(s) Manage</h3>
@@ -18,12 +34,17 @@
 		      		<input type="text" id="productName" name="productName" value="<?php if(isset($this->data->Name)) _e($this->data->Name) ?>" />
 		    	</div>
 		  	</div>
-		  	
 		  	<div class="control-group">
 		  		<label class="control-label">Brand</label>
-		  		<div class="controls">
-		  			<input type="text" name="brand" id="brand" value="<?php if(isset($this->data->Brand)) _e($this->data->Brand) ?>" />
+		  		<div id="brandlist" class="controls">
+		  			<select name="brandlist">
+		  				<option value="other">Other</option>
+		  				<option value="2">1</option>
+					</select>
 		  		</div>
+		  		<div  class="controls">
+		  			<input type="text" name="brand" id="brandbox" value="<?php if(isset($this->data->Brand)) _e($this->data->Brand) ?>" />
+		  		</div>		  		
 		  	</div>
 
 		  	<div class="control-group">
