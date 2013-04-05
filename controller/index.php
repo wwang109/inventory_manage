@@ -8,7 +8,6 @@ class Index extends _Main_controller {
 	}
 	
 	function index($action = null, $msg = null) {
-		
 		if($this->model['login']->isLogin())
 			$this->render('index/index', $action, $msg);
 		else

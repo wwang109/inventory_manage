@@ -1,19 +1,29 @@
 <script type="text/javascript">
 	$(document).ready(function() {
-		if($('#brandlist select').val() != 'other') {
+		$('#productNumber').focus();
+		if($('select#brandlist').val() != 'other') {
 			$('#brandbox').hide();
 		}
-		
-		$('#brandlist select').change( {
-			if($('#brandlist select').val() != 'other') {
+		$("select").change(function() {
+			if($('select#brandlist').val() != 'other')
 				$('#brandbox').hide();
-				return true;
+			else 
+				$('#brandbox').show();
+		})
+		.change();	
+		
+		$('#delete').click(function() {
+			if(confirm('Are you sure?')) {
+				$('#delete').attr('href', '<?php _e(URL . 'product/delete/'); ?>' + $('#productNumber').val());
+				return; 
 			}
-			$('#brandbox').show();
+			else
+				return;
 		});
-
+				
 	});
 </script>
+
 <div class="row-fluid">
 	<div class="page-header">
 		<h3>Product(s) Manage</h3>
@@ -36,17 +46,17 @@
 		  	</div>
 		  	<div class="control-group">
 		  		<label class="control-label">Brand</label>
-		  		<div id="brandlist" class="controls">
-		  			<select name="brandlist">
-		  				<option value="other">Other</option>
-		  				<option value="2">1</option>
+		  		<div class="controls">
+		  			<select name="brandlist" id="brandlist">
+		  				<?php foreach($this->brand as $brand): ?>
+		  					<option value="<?php _e($brand->brandName); ?>"><?php _e($brand->brandName); ?></option>
+		  				<?php endforeach; ?>
 					</select>
 		  		</div>
 		  		<div  class="controls">
 		  			<input type="text" name="brand" id="brandbox" value="<?php if(isset($this->data->Brand)) _e($this->data->Brand) ?>" />
 		  		</div>		  		
 		  	</div>
-
 		  	<div class="control-group">
 		  		<label class="control-label">Quantity Per Unit</label>
 		  		<div class="controls">
@@ -67,16 +77,15 @@
 		  			<input type="file" name="qqfile" id="qqfile" />
 		  		</div>
 		  	</div>		  			  			  	
-			<div class="form-actions">
-  				<button type="submit" class="btn btn-primary">Save changes</button>
+			<div class="form-actions" id="formAction">
+  				<button type="submit" class="btn btn-primary" >Save changes</button>
   				<button type="reset" class="btn">Cancel</button>
+  				<a class="btn btn-danger" id="delete">Remove Product</a>
 			</div>
 			
 		</form>
 
 	</div>
-	
-		
-		
+
 </div>
 
