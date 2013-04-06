@@ -20,27 +20,17 @@
 					</li>
 				<?php endif; ?>
 			</ul>
-		</div>
-		<script>
-			$('#paging ul li a').click( function() {
-				event.preventDefault();
-				$('#paging ul li a').each(function () { 
-					$('#dataContent').load($(this).attr("href"));				
-				});         
-			});
-
-		</script>					
+		</div>				
 	<table id="table" class="table table-bordered table-condensed">
 		<thead>
-			<tr>
+			<tr id ="theader">
 				<th></th>
-				<th>Product Number</th>
-				<th>Name</th>
-				<th>Brand</th>
-				<th>Qty per Unit</th>
-				<th>Date Added</th>
+				<th><a href="<?php _e(URL . "product/getList/{$this->data['paging']['current']}/productName/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc') . "/{$this->data['perPage']}/{$this->data['option']}/{$this->data['search']}") ?>">Product Number</a></th>
+				<th><a href="<?php _e(URL . "product/getList/{$this->data['paging']['current']}/Name/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc') . "/{$this->data['perPage']}/{$this->data['option']}/{$this->data['search']}"); ?>">Name</a></th>
+				<th><a href="<?php _e(URL . "product/getList/{$this->data['paging']['current']}/Brands_id/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc') . "/{$this->data['perPage']}/{$this->data['option']}/{$this->data['search']}"); ?>">Brand</a></th>
+				<th><a href="<?php _e(URL . "product/getList/{$this->data['paging']['current']}/qtyUnit/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc') . "/{$this->data['perPage']}/{$this->data['option']}/{$this->data['search']}"); ?>">QTY PER</a></th>
+				<th><a href="<?php _e(URL . "product/getList/{$this->data['paging']['current']}/dateAdded/" . ($this->data['sortAs'] == 'desc' ? 'asc' : 'desc') . "/{$this->data['perPage']}/{$this->data['option']}/{$this->data['search']}"); ?>">Date Added</a></th>
 				<th>Comments</th>
-				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,12 +43,21 @@
 				<td style="vertical-align:middle" ><?php _e($rows->qtyUnit) ?></td>
 				<td style="vertical-align:middle" ><?php _e($rows->dateAdded) ?></td>
 				<td style="vertical-align:middle" ><?php _e($rows->comment) ?></td>
-				<td style="vertical-align:middle" ><a href="<?php _e(URL . 'product/manage/' . $rows->productNumber); ?>" class="btn btn-primary">Edit</a></td>
+				<td style="vertical-align:middle;" ><center><a href="<?php _e(URL . 'product/manage/' . $rows->productNumber); ?>" class="btn btn-primary">Edit</a></center></td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
 	</div>
+		<script>
+			$("#paging ul li a, #theader th a").click( function() {
+				event.preventDefault();
+				$('#paging ul li a, #theader th a').each(function () { 
+					$('#dataContent').load($(this).attr("href"));				
+				});         
+			});
+
+		</script>		
 	<?php else: ?>
 		<h3>No  results</h3>
 	<?php endif; ?>

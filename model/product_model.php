@@ -80,7 +80,7 @@ class product_Model extends Model {
 		switch ($sortby) {
 			case 'productNumber':
 			case 'Name':
-			case 'Brand':
+			case 'brands_id':
 			case 'qtyUnit':
 				break;
 			default:
